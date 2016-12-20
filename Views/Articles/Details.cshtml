@@ -1,0 +1,82 @@
+﻿@model StarRatingSystem.Models.Article
+
+@{
+    ViewBag.Title = Model.Title;
+    var comments = (IEnumerable<StarRatingSystem.Models.ArticlesComment>)ViewBag.Comments;
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
+
+    decimal rating = (ratingSum / ratingCount);
+    var totalRating = decimal.Parse(rating.ToString());
+}
+@ratingSum
+<h2>@Model.Title</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+            <div>
+                <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
+            </div>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+    </dl>
+</div>
+@foreach(var c in comments)
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <i>@c.ThisDateTime</i>
+            <br />
+            @for (var i = 1; i <= c.Rating; i++)
+            {
+                <span class="starGlowN"></span>
+            }
+            @for (var i = (c.Rating + 1); i <= 5; i++)
+            {
+                <span class="starFadeN"></span>
+            }
+        </div>
+        <div class="col-md-9">
+            @Html.Raw(c.Comments.Replace("\n", "<br />"))
+
+
+            </div>
+        </div>
+}
+
+@Html.Partial("_CommentBox")
+
+<script>
+    function SCRate() {
+        for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+</script>
