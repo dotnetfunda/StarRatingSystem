@@ -10,6 +10,7 @@ namespace StarRatingSystem.Controllers
     {
         public ActionResult Index()
         {
+            return RedirectToAction("Index", "Articles");
             return View();
         }
 

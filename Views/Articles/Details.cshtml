@@ -6,26 +6,21 @@
     var ratingSum = ViewBag.RatingSum;
     var ratingCount = ViewBag.RatingCount;
 
-    decimal rating = (ratingSum / ratingCount);
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
     var totalRating = decimal.Parse(rating.ToString());
 }
-@ratingSum
+
 <h2>@Model.Title</h2>
-
 <div>
-    <hr />
+    <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
+</div>
+<div>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-            <div>
-                <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
-            </div>
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
+      
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -67,7 +62,7 @@
             </div>
         </div>
 }
-
+<hr />
 @Html.Partial("_CommentBox")
 
 <script>
